@@ -99,4 +99,17 @@ class Messaging
         $result = json_decode($response,true);
        return $result ;
     }
+    public function schedule($message,$mobile,$time){
+        $request = array(
+            'apikey'=>$this->api_key,
+            'partnerID'=>$this->partner_id,
+            'shortcode'=>$this->shortcode,
+            'message'=>$message ,
+            'mobile'=>$mobile ,
+            'timeToSend'=>$time /*timestamp or datetime*/
+        );
+        $request = json_encode($request); /*convert to json for processing*/
+        $response = $this->send_post_request($request);
+        return $response;
+    }
 }
