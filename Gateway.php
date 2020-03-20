@@ -1,8 +1,19 @@
 <?php
 
 
-class Messaging
+/**
+ * Class Gateway
+ */
+class Gateway
 {
+    /**
+     * @var $api_key
+     * @var $shortcode
+     * @var $partner_id
+     * @var $api_endpoint
+     * @var $account_balance_endpoint
+     * @var $delivery_report_endpoint
+     */
     protected $api_key;
     protected $shortcode;
     protected $partner_id;
@@ -16,7 +27,14 @@ class Messaging
         $this->api_key = $api_key;
         $this->partner_id = $partner_id;
     }
-    public function send($mobile,$message,$method = "GET"){
+
+    /**
+     * @param $mobile
+     * @param $message
+     * @param string $method
+     * @return mixed
+     */
+    public function send($mobile, $message, $method = "GET"){
         if($method =='GET'){
             $request ="?apikey=" . urlencode($this->api_key) . "&partnerID=" . urlencode($this->partner_id) . "&message=" . urlencode($message) . "&shortcode=$this->shortcode&mobile=$mobile";
             $response = $this->send_get_request($request);
@@ -35,6 +53,10 @@ class Messaging
 
     }
 
+    /**
+     * @param $request
+     * @return mixed
+     */
     public function send_post_request($request){
         $url = $this->api_endpoint;
         $curl = curl_init();
@@ -48,6 +70,11 @@ class Messaging
         return $result;
         
     }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
     public function send_get_request($request){
         $url = $this->api_endpoint.$request;
         $curl = curl_init();
@@ -60,6 +87,11 @@ class Messaging
         return $result;
            
     }
+
+    /**
+     * @param $message_id
+     * @return mixed
+     */
     public function delivery_report($message_id){
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->delivery_report_endpoint);
@@ -80,6 +112,10 @@ class Messaging
         $result = json_decode($response,true);
         return $result;
     }
+
+    /**
+     * @return mixed
+     */
     public function account_balance(){
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->account_balance_endpoint);
@@ -99,7 +135,14 @@ class Messaging
         $result = json_decode($response,true);
        return $result ;
     }
-    public function schedule($message,$mobile,$time){
+
+    /**
+     * @param $message
+     * @param $mobile
+     * @param $time
+     * @return mixed
+     */
+    public function schedule($message, $mobile, $time){
         $request = array(
             'apikey'=>$this->api_key,
             'partnerID'=>$this->partner_id,
