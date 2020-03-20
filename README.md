@@ -18,9 +18,10 @@ You should:
     $api_key = "";$short_code ="";$partner_id="";
     $gateway = new Gateway($api_key,$short_code,$partner_id);
 ```
-* To get account balance
+* Available methods and usage
+    * To get account balance
     ```php
-        <?php
+    <?php
         require_once ("./Gateway.php");
         /*Initialize the gateway. Make sure the variables below have valid values*/
         $api_key = "";$short_code ="";$partner_id="";
@@ -28,20 +29,19 @@ You should:
         $response = $gateway->account_balance();
     ```
     * To get send message via POST
-        ```php
+      ```php
             <?php
              $message = "This is a message sent via POST Method.";
              $mobile ="254715404451";
              $response = $gateway->send($mobile,$message,'POST');
-        ```
+      ```
      * To send text message via GET
-     
-      ```php
+        ```php
                  <?php
                   $message = "This is a message sent via GET Method.";
                   $mobile ="254715404451";
                   $response = $gateway->send($mobile,$message);
-       ```
+        ```
     * To send a scheduled text message. By default this will be send via POST method 
             
          ```php
@@ -90,6 +90,6 @@ You should:
     
         
 #Author
-GitHub @[KeringDeRed](https://github.com/keringdered)
-#Licence
-[MIT](https://opensource.org/licenses/MIT)
+* GitHub @[KeringDeRed](https://github.com/keringdered)
+# Licence
+* [MIT](https://opensource.org/licenses/MIT)
