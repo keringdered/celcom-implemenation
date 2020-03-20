@@ -21,7 +21,13 @@ class Gateway
     protected $account_balance_endpoint = "https://mysms.celcomafrica.com/api/services/getbalance/";
     protected $delivery_report_endpoint = 'https://mysms.celcomafrica.com/api/services/getdlr/';
 
-    public function __construct($api_key,$shortcode,$partner_id)
+    /**
+     * Gateway constructor.
+     * @param $api_key
+     * @param $shortcode
+     * @param $partner_id
+     */
+    public function __construct($api_key, $shortcode, $partner_id)
     {
         $this->shortcode = $shortcode;
         $this->api_key = $api_key;
@@ -155,7 +161,14 @@ class Gateway
         $response = $this->send_post_request($request);
         return $response;
     }
-    public function customize_message($data,$term,$message){
+
+    /**
+     * @param $data
+     * @param $term
+     * @param $message
+     * @return mixed|string
+     */
+    public function customize_message($data, $term, $message){
         if(!$message){
             return "";
         }
