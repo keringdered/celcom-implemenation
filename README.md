@@ -89,7 +89,7 @@ You should:
   ```
     
         
-#Author
+# Author
 * GitHub @[KeringDeRed](https://github.com/keringdered)
 # Licence
 * [MIT](https://opensource.org/licenses/MIT)
