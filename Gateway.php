@@ -155,4 +155,14 @@ class Gateway
         $response = $this->send_post_request($request);
         return $response;
     }
+    public function customize_message($data,$term,$message){
+        if(!$message){
+            return "";
+        }
+        $term_index = str_replace("{",'',str_replace("}",'',$term));
+        if(array_key_exists($term_index,$data)){
+            $message = str_replace($term,$data[$term_index],$message);
+        }
+        return $message;
+    }
 }

@@ -53,4 +53,10 @@ foreach ($responses as $response){
         }
     }
 }
+$data = array('phone_number'=>254713482448,'first_name'=>'John', 'last_name'=>"Doe");
+$message = "Hi {first_name} {last_name}, please get the message sent to {phone_number}" ;
+$customized_message = $gateway->customize_message($data,"{first_name}",$message);
+$customized_message = $gateway->customize_message($data,"{last_name}",$customized_message);
+$customized_message = $gateway->customize_message($data,"{phone_number}",$customized_message);
+echo  $customized_message;
 
