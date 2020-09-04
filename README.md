@@ -51,13 +51,13 @@ You should:
               $time = time()+30*60*60;/*Scheduled to be send in 30 mins time*/
              $response = $gateway->schedule($mobile,$message,$time);
          ```
-    * To get message delivery report
+    * To get message delivery report, call _$gateway->delivery_report($message_id)_ method
         ```php
          <?php
           $message_id = 345667;
           $response = $gateway->delivery_report($message_id);
-        ```
-    * To get message delivery report
+        ``` 
+    * To customized messages with name and phone numbers, you call the _customize_message()_ method
       ```php
          <?php
           $data = array('phone_number'=>254713482448,'first_name'=>'John', 'last_name'=>"Doe");
@@ -68,7 +68,7 @@ You should:
         /*The return message will be: Hi John Doe, please get the message sent to 254713482448*/ 
     
       ```
-    * This is the format of all the responses and how one can utilize them
+    * This is the format of all the responses except for delivery report and how one can utilize them
     ```php
     <?php
   $response = '{"responses":[{"respose-code":200,"response-description":"Success","mobile":254713482448,"messageid":8290842,"networkid":"1"},{"respose-code":200,"response-description":"Success","mobile":254713482448,"messageid":8290843,"networkid":"1"}]}';
