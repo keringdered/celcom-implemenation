@@ -73,7 +73,7 @@ You should:
         echo $key." ".$value;
       /*or do whatever you want to do with the deliver response. May be mark your local DB messages as delivered */
       }
-      /*You can process this in the following two ways:
+      /*
       *
       * Option 2
       * Since this is a one dimensional array, access the values by array keys
