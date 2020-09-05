@@ -57,7 +57,8 @@ You should:
           $message_id = 345667;
           $response = $gateway->delivery_report($message_id);
       /*response will be in this format
-      *$response = ['response-code'=> 200,
+      */
+      $response = ['response-code'=> 200,
                    'message-id'=> 158371234488,
                    'response-description'=> "Success",
                    'delivery-status'=> 32,
@@ -65,9 +66,10 @@ You should:
                    'delivery-tat'=> "00:00:20",
                    'delivery-networkid'=> 1,
                    'delivery-time'=> "2020-09-05 11:00:31"
-      *
+      ];
+      /*
       *You can process this in the following two ways:
-      ** 1
+      ** Option 1
       */
       foreach ($response as $key => $value){
         echo $key." ".$value;
