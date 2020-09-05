@@ -1,12 +1,12 @@
 # Introduction
-Celcom Africa is a company that provide Bulk SMS & USSD service to enterprises.Having started using this service i tried to come up with the easiest way a developer can integrated this service in a PHP environment and as a result this small light weight library came into being. The library allows the developer in question to get account balance,send text message using both POST and GET methods,schedule a text message to be send at a later time or date and customize or personalize the text message based on provided options.
+Celcom Africa is a company that provide Bulk SMS & USSD service to enterprises.Having started using this service I tried to come up with the easiest way a developer can easily integrate this service in a PHP environment and as a result this small light-weight library came into being. The library allows the developer in question to get account balance,send text message using both POST and GET methods,schedule a text message to be send at a later time or date and customize or personalize the text message based on provided options.
 # Prerequisite
 You should:
 * Be registered with Celcom Africa
 * Have a valid API Key 
 * Have the correct partner id
 # Usage
-* Clone this repository. In your terminal type the following and hit enter.
+* Clone this repository. In your terminal type the following and hit enter.You may move the files to your project root folder to use _require()_ as in these examples.
 ```php
     git clone https://github.com/keringdered/celcom-implemenation.git
 ``` 
@@ -42,7 +42,7 @@ You should:
                   $mobile ="254715404451";
                   $response = $gateway->send($mobile,$message);
         ```
-    * To send a scheduled text message. By default this will be send via POST method 
+    * To send a scheduled text message. By default, this will be sent via POST method. 
             
          ```php
         <?php
@@ -56,6 +56,31 @@ You should:
          <?php
           $message_id = 345667;
           $response = $gateway->delivery_report($message_id);
+      /*response will be in this format
+      *$response = ['response-code'=> 200,
+                   'message-id'=> 158371234488,
+                   'response-description'=> "Success",
+                   'delivery-status'=> 32,
+                   'delivery-description'=> "DeliveredToTerminal",
+                   'delivery-tat'=> "00:00:20",
+                   'delivery-networkid'=> 1,
+                   'delivery-time'=> "2020-09-05 11:00:31"
+      *
+      *You can process this in the following two ways:
+      ** 1
+      */
+      foreach ($response as $key => $value){
+        echo $key." ".$value;
+      /*or do whatever you want to do with the deliver response. May be mark your local DB messages as delivered */
+      }
+      /*You can process this in the following two ways:
+      *
+      * Option 2
+      * Since this is a one dimensional array, access the values by array keys
+      */
+      $response_code = $response['response-code'];
+      $response_description = $response['response-description'];
+      $delivery = $response['delivery-description'];
         ``` 
     * To customized messages with name and phone numbers, you call the _customize_message()_ method
       ```php
