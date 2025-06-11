@@ -41,20 +41,24 @@ class Gateway
      * @return mixed
      */
     public function send($mobile, $message, $method = "GET"){
-        if($method =='GET'){
-            $request ="?apikey=" . urlencode($this->api_key) . "&partnerID=" . urlencode($this->partner_id) . "&message=" . urlencode($message) . "&shortcode=$this->shortcode&mobile=$mobile";
-            $response = $this->send_get_request($request);
-        }else{
-            $request = array(
+        
+        $request = array(
                 'apikey'=>$this->api_key,
                 'partnerID'=>$this->partner_id,
                 'shortcode'=>$this->shortcode,
                 'message'=>$message ,
                 'mobile'=>$mobile
             );
+        
+        if($method =='GET'){
+            $request ="?".http_build_query($request);
+            $response = $this->send_get_request($request);
+        }else{
+           
             $request = json_encode($request); /*convert to json for processing*/
             $response = $this->send_post_request($request);
         }
+        
         return $response;
 
     }
