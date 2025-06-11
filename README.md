@@ -1,5 +1,5 @@
 # Introduction
-Celcom Africa is a company that provide Bulk SMS & USSD service to enterprises.Having started using this service I tried to come up with the easiest way a developer can easily integrate this service in a PHP environment and as a result this small light-weight library came into being. The library allows the developer in question to get account balance,send text message using both POST and GET methods,schedule a text message to be send at a later time or date and customize or personalize the text message based on provided options.
+This is a Bulk SMS library build behind the Celcom Africa Bulk SMS and Sender IDs.Having started using this  bulk SMS service, I tried to come up with the easiest way a developer can easily integrate this service in a PHP environment and as a result this, small light-weight library came into being. The library allows the developer in question to get account balance,send text message using both POST and GET methods,schedule a text message to be send at a later time or date and customize or personalize the text message based on provided options.
 # Prerequisite
 You should:
 * Be registered with Celcom Africa
