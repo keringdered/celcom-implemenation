@@ -6,10 +6,12 @@ You should:
 * Have a valid API Key 
 * Have the correct partner id
 # Usage
-* Clone this repository. In your terminal type the following and hit enter.You may move the files to your project root folder to use _require()_ as in these examples.
+* Clone this repository. In your terminal, type the following and hit enter.You may move the files to your project root folder to use _require()_ as in these examples.
 ```php
     git clone https://github.com/keringdered/celcom-implemenation.git
 ``` 
+* _Refer to `index.php` for sample code snippet on how to use the class_
+
 * After cloning,go to the file that you want to implement this or utilize this package and import the Gateway.php file as follows:
 ```php
     <?php

@@ -15,10 +15,15 @@ class Gateway
      * @var $delivery_report_endpoint
      */
     protected $api_key;
+
     protected $shortcode;
+
     protected $partner_id;
+
     protected  $api_endpoint = "https://mysms.celcomafrica.com/api/services/sendsms/";
+
     protected $account_balance_endpoint = "https://mysms.celcomafrica.com/api/services/getbalance/";
+    
     protected $delivery_report_endpoint = 'https://mysms.celcomafrica.com/api/services/getdlr/';
 
     /**
@@ -30,7 +35,9 @@ class Gateway
     public function __construct($api_key, $shortcode, $partner_id)
     {
         $this->shortcode = $shortcode;
+
         $this->api_key = $api_key;
+
         $this->partner_id = $partner_id;
     }
 
@@ -44,19 +51,29 @@ class Gateway
         
         $request = array(
                 'apikey'=>$this->api_key,
+
                 'partnerID'=>$this->partner_id,
+
                 'shortcode'=>$this->shortcode,
+
                 'message'=>$message ,
+
                 'mobile'=>$mobile
             );
         
         if($method =='GET'){
+
             $request ="?".http_build_query($request);
-            $response = $this->send_get_request($request);
+
+            $url = $this->api_endpoint.$request;
+
+            $response = $this->send_get_request($url,$request);
+
         }else{
            
             $request = json_encode($request); /*convert to json for processing*/
-            $response = $this->send_post_request($request);
+            
+            $response = $this->send_post_request($this->api_endpoint,$request);
         }
         
         return $response;
@@ -67,16 +84,24 @@ class Gateway
      * @param $request
      * @return mixed
      */
-    public function send_post_request($request){
-        $url = $this->api_endpoint;
+    public function send_post_request($url,$request){
+
         $curl = curl_init();
+
         curl_setopt($curl, CURLOPT_URL, $url);
+
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json')) ;
+
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
         curl_setopt($curl, CURLOPT_POST, true);
+
         curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+
         $response = curl_exec($curl);
+
         $result = json_decode($response,true);
+
         return $result;
         
     }
@@ -85,15 +110,21 @@ class Gateway
      * @param $request
      * @return mixed
      */
-    public function send_get_request($request){
-        $url = $this->api_endpoint.$request;
+    public function send_get_request($url){
         $curl = curl_init();
+
         curl_setopt($curl,CURLOPT_URL,$url);
+
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
         $response = curl_exec($curl);
+
         curl_close($curl);
+
         $result = json_decode($response,true);
+
         return $result;
            
     }
@@ -103,47 +134,35 @@ class Gateway
      * @return mixed
      */
     public function delivery_report($message_id){
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $this->delivery_report_endpoint);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json')); //setting custom header
+
         $request = array(
             //Fill in the request parameters with valid values
             'partnerID' => $this->partner_id,
+
             'apikey' => $this->api_key,
+
             'messageID' => $message_id,
         );
+
         $data_string = json_encode($request);
 
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
-
-        $response = curl_exec($curl);
-        $result = json_decode($response,true);
-        return $result;
+        return $this->send_post_request($this->delivery_report_endpoint,$data_string);
     }
 
     /**
      * @return mixed
      */
     public function account_balance(){
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $this->account_balance_endpoint);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json')); //setting custom header
+
         $request = array(
             'partnerID' => $this->partner_id,
+
             'apikey' => $this->api_key,
         );
 
         $data_string = json_encode($request);
 
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
-
-        $response = curl_exec($curl);
-        $result = json_decode($response,true);
-       return $result ;
+       return $this->send_post_request($this->account_balance_endpoint,$data_string) ;
     }
 
     /**
@@ -153,6 +172,7 @@ class Gateway
      * @return mixed
      */
     public function schedule($message, $mobile, $time){
+
         $request = array(
             'apikey'=>$this->api_key,
             'partnerID'=>$this->partner_id,
@@ -162,7 +182,9 @@ class Gateway
             'timeToSend'=>$time /*timestamp or datetime*/
         );
         $request = json_encode($request); /*convert to json for processing*/
-        $response = $this->send_post_request($request);
+
+        $response = $this->send_post_request($this->api_endpoint,$request);
+
         return $response;
     }
 
@@ -176,9 +198,13 @@ class Gateway
         if(!$message){
             return "";
         }
+
         $term_index = str_replace("{",'',str_replace("}",'',$term));
+
         if(array_key_exists($term_index,$data)){
+
             $message = str_replace($term,$data[$term_index],$message);
+
         }
         return $message;
     }
